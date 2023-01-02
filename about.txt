@@ -1,1 +1,5 @@
 This plugin uses the rmapi interface to send epub files directly to your remarkable tablet.
+
+Currently it is set up to expect that rmapi is set up so that no password is needed.
+
+The folder on the tablet should already exist.

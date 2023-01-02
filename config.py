@@ -1,5 +1,5 @@
 from calibre.utils.config import JSONConfig
-from qt.core import QWidget, QHBoxLayout, QLabel, QLineEdit,QPushButton
+from qt.core import QWidget, QFormLayout, QLabel, QLineEdit,QPushButton
 
 # This is where all preferences for this plugin will be stored
 # Remember that this name (i.e. plugins/interface_demo) is also
@@ -9,7 +9,6 @@ from qt.core import QWidget, QHBoxLayout, QLabel, QLineEdit,QPushButton
 prefs = JSONConfig('plugins/send_by_rmapi')
 
 # Set defaults
-## default_site_customization = 'rmapi ; /Books/Unread/Calibre;EPUB,PDF ; 1'
 prefs.defaults['command_rmapi'] = 'rmapi'
 prefs.defaults['folder_on_device'] = '/Books/Unread/Calibre'
 
@@ -18,28 +17,26 @@ class ConfigWidget(QWidget):
 
     def __init__(self):
         QWidget.__init__(self)
-        self.l = QHBoxLayout()
-        self.setLayout(self.l)
 
-        self.label = QLabel('Command to run rmapi:')
-        self.l.addWidget(self.label)
-
-        self.msg0 = QLineEdit(self)
-        self.msg0.setText(prefs['command_rmapi'])
-        self.l.addWidget(self.msg0)
-        self.label.setBuddy(self.msg0)
-
-
-        self.l.addSpacing(5)
-        self.label = QLabel('Folder on reMarkable to send files to:')
-        self.l.addWidget(self.label)
-
-        self.msg1 = QLineEdit(self)
-        self.msg1.setText(prefs['folder_on_device'])
-        self.l.addWidget(self.msg1)
-        self.label.setBuddy(self.msg1)
+        # creating line edits
+        self.command = QLineEdit()
+        self.command.setText(prefs['command_rmapi'])
+    
+        self.folder = QLineEdit()
+        self.folder.setText(prefs['folder_on_device'])
+        
+        # creating a form layout
+        layout = QFormLayout()
+        layout.setFieldGrowthPolicy(layout.AllNonFixedFieldsGrow)
+        # adding rows
+        layout.addRow(QLabel("Command to run rmapi"), self.command)
+        layout.addRow(QLabel("The command you would type on the shell."))
+        layout.addRow(QLabel("Folder on reMarkable to send files to:"), self.folder)
+        ## this could also be a setting, a checkbox if we want to create non-existing folders
+        layout.addRow(QLabel('If the folder does not exist rmapi will send an error.'),)
+        self.setLayout(layout)
 
 
     def save_settings(self):
-        prefs['command_rmapi'] = self.msg0.text()
-        prefs['folder_on_device'] = self.msg1.text()
+        prefs['command_rmapi'] = self.command.text()
+        prefs['folder_on_device'] = self.folder.text()

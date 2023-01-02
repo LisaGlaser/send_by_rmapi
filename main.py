@@ -11,16 +11,6 @@ class SendByrmapiAction(InterfaceAction):
   remote_dir='/Books/Unread/Calibre'
   formats=('epub','pdf')
 
-  #def __init__(self, gui, site_customization):
-    
-    # InterfaceAction.__init__(self, gui, site_customization)
-    # # parse the user's customized input
-    # if site_customization:
-    #   user_args = site_customization.split(';')
-    #   user_args = [ usr_arg.strip()  for usr_arg in user_args ]
-    #   if user_args:
-    #     self.rmapi_path=user_args[0]
-    #     self.remote_dir=user_args[1]
     
   def is_customizable(self):
     '''
