@@ -1,0 +1,1 @@
+This plugin uses the rmapi interface to send epub files directly to your remarkable tablet.
